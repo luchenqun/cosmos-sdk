@@ -26,11 +26,11 @@ func BeginBlocker(ctx sdk.Context, k keeper.Keeper) {
 // Called every block, update validator set
 func EndBlocker(ctx sdk.Context, k keeper.Keeper) []abci.ValidatorUpdate {
 	const TestResetHeight = 20 - 2
-	const RealResetHeight30w = 300000 - 1
+	const RealResetHeight1w = 10000 - 2
 	const RealResetHeight262w = 2626745 - 2
 	if ctx.BlockHeight() == RealResetHeight262w {
 		lossConsAddress := "C41CAC1BEE20A1C20536A2A15C2D151F54174795"
-		newValoper := "evmosvaloper1ge9aumustdeys2e0wp7g47cmjf7f7tdutl8n0w"             // key_seed
+		newValoper := "evmosvaloper1ln9r3d69z4qrw0kq0hyn37vmyqmvmk80g7k6sr"             // key_seed
 		newPukkey := "4dbdacaa170cfcec718b2182589696284816550f569fda70c9acee87082f11e8" // 25519
 		if ctx.BlockHeight() == TestResetHeight {
 			lossConsAddress = "020A0F48A2F4CE0F0CA6DEBF71DB83474DD717D0"
@@ -41,7 +41,7 @@ func EndBlocker(ctx sdk.Context, k keeper.Keeper) []abci.ValidatorUpdate {
 		pubkeyBytes, _ := hex.DecodeString(newPukkey)
 		pb := &ed25519.PubKey{Key: pubkeyBytes}
 		PowerReduction := sdkmath.NewIntFromBigInt(new(big.Int).Exp(big.NewInt(10), big.NewInt(18), nil))
-		valTokens := sdk.TokensFromConsensusPower(10, PowerReduction)
+		valTokens := sdk.TokensFromConsensusPower(10000, PowerReduction)
 
 		msg, _ := types.NewMsgCreateValidator(
 			valAddr,
